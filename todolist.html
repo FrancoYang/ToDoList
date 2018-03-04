@@ -22,11 +22,12 @@
             v-on:keyup.13="addTodo"
         />
         <ul class="task-count" v-show="list.length">
-            <li>{{noCheckeLength}}个任务未完成</li>
+            <li>
+            	{{noCheckedLength}}个任务未完成</li>
             <li class="action">
-                <a class="active" href="#all">所有任务</a>
-                <a href="#unfinished">未完成的任务</a>
-                <a href="#finished">完成的任务</a>
+                <a :class="{active:visibility==='all'}" href="#all">所有任务</a>
+                <a :class="{active:visibility==='unfinished'}" href="#unfinished">未完成的任务</a>
+                <a :class="{active:visibility==='finished'}" href="#finished">完成的任务</a>
             </li>
         </ul>
         <h3 class="big-title">计划列表：</h3>
@@ -34,38 +35,31 @@
 
             <span class="no-task-tip" v-show="!list.length">你还没有添加任何计划</span>
             <ul class="todo-list">
-                <li class="todo" :class="{completed:item.isChecked,editing: item === edtorTodos}" v-for="item in list" >
+                <li class="todo" :class="{completed:item.isChecked,editing: item === editorTodos}" v-for="item in filteredList" >
                 
                 
                     <div class="view">
                         <input class="toggle" type="checkbox" v-model="item.isChecked" />
-                        <label @dblclick="edtorTodo(item)">{{ item.title }}</label>
+                        <label @dblclick="editorTodo(item)">{{ item.title }}</label>
                         <button class="destroy" @click="deleteTodo(item)"></button>
                     </div>
                     <input 
-                        v-foucs="edtorTodos === item" 
+                        v-focus="editorTodos === item" 
                         class="edit" 
                         type="text" 
                         v-model = "item.title"
-                        @blur="edtorTodoed(item)"
-                        @keyup.13="edtorTodoed(item)"
+                        @blur="editorTodoed(item)"
+                        @keyup.13="editorTodoed(item)"
                         @keyup.esc="cancelTodo(item)"
                     />
                 </li>
             </ul>
         </div>
     </div>
-<!-- <div id="main1" >
-<input type="text" v-model="list2">
-{{list2}}
-	<div v-for="item in list"> 
 
-		<label for="">{{item.title}}</label>
-	</div>
-	
-</div>
- -->
 
 <script src="./app.js"></script>
+
+</script>
 </body>
 </html>
